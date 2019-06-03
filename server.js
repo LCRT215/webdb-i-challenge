@@ -24,8 +24,12 @@ server.get("/", async (req, res) => {
 
 server.get("/:id", async (req, res) => {
   try {
-    const data = await accounts.findById();
-    res.json(data);
+    const data = await accounts.findById(req.params.id);
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(404).json({ message: "error" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "error" });
